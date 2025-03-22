@@ -1,6 +1,7 @@
 import os
 from rich.console import Console
 from commands.project import *
+from commands.file_organizer import *
 
 console = Console()
 
@@ -12,6 +13,11 @@ COMMAND_FUNCTIONS = {
     "list-projects": list_projects,
     "archive-project": archive_project,
     "zip-project": zip_project,
+
+    # File Management
+    "organize-files": organize_files,
+    "list-organized": list_organized,
+    "reset-organized": reset_organized,
 
     # General
     "help": lambda: show_help(),
@@ -37,6 +43,11 @@ def show_help():
             "list-projects": "List all projects",
             "archive-project <name>": "Move a project to the archive",
             "zip-project <name>": "Compress a project into a .zip file",
+        },
+        "File Management": {
+            "organize-files": "Sort and organize files from Downloads",
+            "list-organized": "List organized files",
+            "reset-organized": "Delete all organized files",
         },
         "General": {
             "help": "Show this help menu",
