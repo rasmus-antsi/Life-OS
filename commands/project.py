@@ -7,29 +7,43 @@ console = Console()
 PROJECTS_DIR = os.path.expanduser("~/life-os/projects")
 
 # ──────────────────────────── Project Management ──────────────────────────── #
-def start_project(name):
-    """Create a new project: life-os start-project <name> (type will be asked)"""
-    console.print(f"Select project type for {name}:")
-    console.print("  1. Hardware")
-    console.print("  2. Software")
-    console.print("  3. Custom")
-    choice = input("Enter choice (1/2/3): ").strip()
-    
-    project_types = {"1": "hardware", "2": "software", "3": "custom"}
-    project_type = project_types.get(choice, "custom")
-    project_path = os.path.join(PROJECTS_DIR, project_type, name)
+def get_templates():
+    """Return default templates with folders and files."""
+    return {
+        "hardware": {"folders": ["3D Files", "KiCAD Files", "Code"], "files": ["README.md"]},
+        "3D Design": {"folders": ["Final Version", "Test Files"], "files": ["README.md"]},
+        "software": {"folders": ["src", "tests"], "files": ["README.md", "src/main.py"]},
+        "custom": {"folders": [], "files": ["README.md"]}
+    }
 
+def start_project(name):
+    """Create a new project."""
+    console.print("Select project type:")
+    choices = {"1": "hardware", "2": "3D Design", "3": "software", "4": "custom"}
+    for k, v in choices.items():
+        console.print(f"  {k}. {v}")
+    project_type = choices.get(input("Enter choice (1/2/3/4): ").strip(), "custom")
+    
+    project_path = os.path.join(PROJECTS_DIR, project_type, name)
     if os.path.exists(project_path):
         console.print("Project already exists.")
         return
     
     os.makedirs(project_path, exist_ok=True)
+    templates = get_templates().get(project_type, {"folders": [], "files": []})
     
-    # Copy from templates
-    template_path = os.path.join(os.path.dirname(__file__), "..", "templates", project_type)
-    if os.path.exists(template_path):
-        shutil.copytree(template_path, project_path, dirs_exist_ok=True)
-
+    for folder in templates["folders"]:
+        os.makedirs(os.path.join(project_path, folder), exist_ok=True)
+    
+    for filename in templates["files"]:
+        file_path = os.path.join(project_path, filename)
+        os.makedirs(os.path.dirname(file_path), exist_ok=True)
+        with open(file_path, "w") as f:
+            if filename.endswith("README.md"):
+                f.write(f"# {project_type.capitalize()} Project\n\nDescribe your {project_type} project here.")
+            elif filename.endswith(".py"):
+                f.write("# Main script\nprint('Hello, World!')")
+    
     console.print(f"Project '{name}' created in {project_path}")
 
 def open_project(name):
@@ -92,7 +106,7 @@ def zip_project(name):
         console.print("Project not found.")
 
 def find_project(name):
-    """Find a project by name"""
+    """Find a project by name."""
     for root, dirs, _ in os.walk(PROJECTS_DIR):
         if name in dirs:
             return os.path.join(root, name)
