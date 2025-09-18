@@ -21,8 +21,9 @@ A command-line productivity tool for managing projects and organizing files. Lif
 ## Installation
 
 ### Prerequisites
-- Python 3.6 or higher
+- Python 3.6 or higher (use `python3` command)
 - macOS (the tool is designed for macOS file paths)
+- Administrator access (for creating symlink in `/usr/local/bin/`)
 
 ### Setup Instructions
 
@@ -44,7 +45,12 @@ A command-line productivity tool for managing projects and organizing files. Lif
 
 4. **Run the setup** (this will create a symlink for terminal access):
    ```bash
-   python main.py
+   python3 main.py
+   ```
+   
+   **Note**: You may need to use `sudo` for the first run to create the symlink:
+   ```bash
+   sudo python3 main.py
    ```
 
    The first time you run this, it will automatically create a symlink at `/usr/local/bin/life-os` so you can use the command from anywhere in your terminal.
@@ -144,9 +150,24 @@ You can modify these paths by editing the `settings.py` file.
 ## Troubleshooting
 
 ### Permission Issues
-If you get permission errors when creating the symlink, you may need to run:
+If you get permission errors when creating the symlink, you need to run with sudo:
 ```bash
-sudo python main.py
+sudo python3 main.py
+```
+
+**Alternative**: If you prefer not to use sudo, you can create a local symlink:
+```bash
+# Create local bin directory
+mkdir -p ~/.local/bin
+
+# Add to PATH (add this to your ~/.zshrc)
+echo 'export PATH="$HOME/.local/bin:$PATH"' >> ~/.zshrc
+
+# Create symlink
+ln -s /path/to/Life-OS/main.py ~/.local/bin/life-os
+
+# Reload shell
+source ~/.zshrc
 ```
 
 ### Command Not Found
