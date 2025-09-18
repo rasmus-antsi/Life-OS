@@ -1,4 +1,4 @@
-#!/Users/rasmus/life-os/life-os/venv/bin/python
+#!/usr/bin/env python3
 from rich.console import Console
 from rich.panel import Panel
 import sys
