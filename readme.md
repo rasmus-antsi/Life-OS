@@ -45,17 +45,22 @@ A command-line productivity tool for managing projects and organizing files. Lif
 
 4. **Run the setup** (this will create a symlink for terminal access):
    ```bash
-   python3 main.py
-   ```
-   
-   **Note**: You may need to use `sudo` for the first run to create the symlink:
-   ```bash
    sudo python3 main.py
    ```
 
-   The first time you run this, it will automatically create a symlink at `/usr/local/bin/life-os` so you can use the command from anywhere in your terminal.
+   This will create a symlink at `/usr/local/bin/life-os` so you can use the command from anywhere in your terminal.
 
-5. **Verify installation**:
+5. **Fix the symlink** (if needed):
+   If you get a "bad interpreter" error, the symlink might be pointing to the wrong file. Fix it with:
+   ```bash
+   # Remove the incorrect symlink
+   sudo rm /usr/local/bin/life-os
+   
+   # Create the correct symlink
+   sudo ln -s /Users/rasmus/Life-OS/main.py /usr/local/bin/life-os
+   ```
+
+6. **Verify installation**:
    ```bash
    life-os help
    ```
@@ -175,6 +180,16 @@ If `life-os` command is not found after installation:
 1. Check if `/usr/local/bin` is in your PATH
 2. Try running: `export PATH="/usr/local/bin:$PATH"`
 3. Add the above line to your shell profile (`.zshrc`, `.bash_profile`, etc.)
+
+### Bad Interpreter Error
+If you get "bad interpreter" or "no such file or directory" error:
+```bash
+# Remove the incorrect symlink
+sudo rm /usr/local/bin/life-os
+
+# Create the correct symlink pointing to main.py
+sudo ln -s /Users/rasmus/Life-OS/main.py /usr/local/bin/life-os
+```
 
 ### File Organization Issues
 - Make sure your Downloads folder exists at `~/Downloads/`
