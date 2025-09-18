@@ -2,9 +2,9 @@ import os
 import shutil
 from rich.console import Console
 
-console = Console()
+from settings import *
 
-PROJECTS_DIR = os.path.expanduser("~/life-os/projects")
+console = Console()
 
 # ──────────────────────────── Project Management ──────────────────────────── #
 def get_templates():

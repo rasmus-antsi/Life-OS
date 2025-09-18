@@ -1,7 +1,6 @@
 #!/Users/rasmus/life-os/life-os/venv/bin/python
 from rich.console import Console
 from rich.panel import Panel
-import os
 import sys
 from commands import run_command, setup_symlink, show_help
 

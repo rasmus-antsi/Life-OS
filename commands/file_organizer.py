@@ -2,11 +2,9 @@ import os
 import shutil
 from rich.console import Console
 
-console = Console()
+from settings import *
 
-HOME_DIR = os.path.expanduser("~")
-DOWNLOADS_DIR = os.path.join(HOME_DIR, "Downloads")
-SORTED_DIR = os.path.join(HOME_DIR, "life-os/organized")
+console = Console()
 
 FILE_CATEGORIES = {
     "Documents": [".pdf", ".docx", ".txt", ".pptx", ".xlsx"],
